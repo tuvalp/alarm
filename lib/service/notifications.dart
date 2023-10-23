@@ -18,10 +18,11 @@ class NotificationService {
         const AndroidInitializationSettings("@drawable/alarm_icon");
 
     IOSInitializationSettings iOSInitializationSettings =
-        const IOSInitializationSettings(
+        IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
+      onDidReceiveLocalNotification: (id, title, body, payload) => {},
     );
 
     InitializationSettings settings = InitializationSettings(
@@ -69,19 +70,20 @@ class NotificationService {
     tz.TZDateTime scheduledDate = tz.TZDateTime.from(time!, tz.local);
 
     NotificationDetails notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails(
-          "channel 1",
-          "Alarms",
-          importance: Importance.max,
-          priority: Priority.max,
-          sound: uriSound,
-          audioAttributesUsage: AudioAttributesUsage.alarm,
-          fullScreenIntent: true,
-          autoCancel: false,
-          playSound: true,
-          //channelAction: new AndroidNotificationChannelAction
-        ),
-        iOS: const IOSNotificationDetails());
+      android: AndroidNotificationDetails(
+        "channel 1",
+        "Alarms",
+        importance: Importance.max,
+        priority: Priority.max,
+        sound: uriSound,
+        audioAttributesUsage: AudioAttributesUsage.alarm,
+        fullScreenIntent: true,
+        autoCancel: false,
+        playSound: true,
+        //channelAction: new AndroidNotificationChannelAction
+      ),
+      iOS: const IOSNotificationDetails(),
+    );
 
     await notificationsPlugin.zonedSchedule(
       id,
