@@ -20,16 +20,12 @@ class _AlarmViewState extends State<AlarmView> {
   late final NotificationService notificationService;
 
   @override
-  void initState() async {
+  void initState() {
     Permission.audio.request();
     Permission.notification.request();
     notificationService = NotificationService();
     notificationService.initializa();
-    final details = await notificationService.notificationsPlugin
-        .getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      notificationService.onNotificationClick.add(details.payload);
-    }
+
     notificationListiner();
     super.initState();
   }

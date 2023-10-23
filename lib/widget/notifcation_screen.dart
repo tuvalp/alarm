@@ -7,23 +7,27 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: null,
-      bottomSheet: null,
-      body: Center(
+    return Material(
+      child: SafeArea(
+        child: Container(
           child: Column(
-        children: [
-          const Icon(
-            Icons.alarm,
-            size: 120,
-            color: Colors.blue,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.alarm,
+                size: 120,
+                color: Colors.blue,
+              ),
+              Text(payload!),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Stop"),
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Stop"),
-          ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }

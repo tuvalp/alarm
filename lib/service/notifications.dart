@@ -21,14 +21,30 @@ class NotificationService {
       android: androidSttings,
     );
 
+    const AndroidNotificationChannel androidChannel =
+        AndroidNotificationChannel(
+      "channel 1",
+      "Alarms",
+      importance: Importance.high,
+    );
+
+    await notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidChannel);
+
     tz.initializeTimeZones();
     await notificationsPlugin.initialize(
       settings,
       onSelectNotification: ((payload) async {
-        print("cosamo");
         onNotificationClick.add(payload);
       }),
     );
+
+    final details = await notificationsPlugin.getNotificationAppLaunchDetails();
+    if (details != null && details.didNotificationLaunchApp) {
+      onNotificationClick.add(details.payload);
+    }
   }
 
   Future<void> showNotification({

@@ -19,10 +19,17 @@ class MainActivity: FlutterActivity() {
                 result.success(resourceToUriString(this@MainActivity.applicationContext, resourceId))
             }
             if ("getAlarmUri" == call.method) {
-                result.success(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString())
+                result.success(
+                    RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString()
+                    
+                )
 
             }
         }
+
+
+
+
     }
 
     private fun resourceToUriString(context: Context, resId: Int): String? {
@@ -33,4 +40,5 @@ class MainActivity: FlutterActivity() {
                 + "/"
                 + context.resources.getResourceEntryName(resId))
     }
+
 }
