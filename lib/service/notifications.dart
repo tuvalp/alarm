@@ -17,8 +17,16 @@ class NotificationService {
     AndroidInitializationSettings androidSttings =
         const AndroidInitializationSettings("@drawable/alarm_icon");
 
+    IOSInitializationSettings iOSInitializationSettings =
+        const IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
     InitializationSettings settings = InitializationSettings(
       android: androidSttings,
+      iOS: iOSInitializationSettings,
     );
 
     const AndroidNotificationChannel androidChannel =
@@ -62,17 +70,18 @@ class NotificationService {
 
     NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
-      "channel 1",
-      "Alarms",
-      importance: Importance.max,
-      priority: Priority.max,
-      sound: uriSound,
-      audioAttributesUsage: AudioAttributesUsage.alarm,
-      fullScreenIntent: true,
-      autoCancel: false,
-      playSound: true,
-      //channelAction: new AndroidNotificationChannelAction
-    ));
+          "channel 1",
+          "Alarms",
+          importance: Importance.max,
+          priority: Priority.max,
+          sound: uriSound,
+          audioAttributesUsage: AudioAttributesUsage.alarm,
+          fullScreenIntent: true,
+          autoCancel: false,
+          playSound: true,
+          //channelAction: new AndroidNotificationChannelAction
+        ),
+        iOS: const IOSNotificationDetails());
 
     await notificationsPlugin.zonedSchedule(
       id,
